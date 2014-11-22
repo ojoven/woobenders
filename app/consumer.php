@@ -15,16 +15,10 @@ class Consumer extends OauthPhirehose {
 		$this->db = $db;
 	}
 
-	public function init_models() {
-		$this->Tweet = ClassRegistry::init('Tweet');
-		$this->MissedTweet = ClassRegistry::init('MissedTweet');
-	}
-
 	/** Treat Streamed Tweet **/
 	public function enqueueStatus($status) {
 		//This function is called automatically by the Phirehose class
 		//when a new tweet is received with the JSON data in $status
-		$now = date('Y-m-d H:i:s', time());
 		$tweet = json_decode($status);
 
 		if (isset($tweet->id_str)) {
@@ -56,19 +50,25 @@ class Consumer extends OauthPhirehose {
 
 		// Let's extract / parse some interesting info from the tweet
 		$tweetId = $tweet->id_str;
+		$text = $tweet->text;
+		$isRetweet = (isset($tweet->retweeted_status)) ? true : false;
+		$username = $tweet->user->screen_name;
 
 		// If there's a ", ', :, or ; in object elements, serialize() gets corrupted
 		// You should also use base64_encode() before saving this
 		$rawTweet = base64_encode(serialize($tweet));
 
-		// Is this a retweet?
-		$isRetweet = (isset($tweet->retweeted_status)) ? true : false;
+		// Now
+		$now = date('Y-m-d H:i:s', time());
 
 		// Ok, let's save it
 		$data = array(
 			'tweet_id' => $tweetId,
+			'text' => $text,
+			'username' => $username,
 			'raw_tweet' => $rawTweet,
-			'is_retweet' => $isRetweet
+			'retweet' => $isRetweet,
+			'created_date' => $now
 		);
 
 		$id = $this->db->insert('tweets', $data);
