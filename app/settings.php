@@ -1,4 +1,5 @@
 <?php
+/** Place here your MySQL credentials **/
 define('DB_HOST', 'xxxx');
 define('DB_USERNAME', 'xxxx');
 define('DB_PASSWORD', 'xxxx');
