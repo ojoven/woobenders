@@ -45,6 +45,6 @@ This framework has been done by [@ojoven](http://twitter.com/ojoven). You can fi
 
 Example
 ----------------
-Along with this framework, it comes an example of use. Just say hi! (in spanish), to [@donpepitobot](http://twitter.com/donpepitobot):
+Along with this framework, it comes an example of use. Just say hi! (in spanish), to @donpepito:
 
 [Hola, @donpepitobot](https://twitter.com/intent/tweet?text=Hola,+@donpepitobot)
