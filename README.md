@@ -2,9 +2,9 @@ A mention / response Twitter bot framework.
 
 Installation
 ------------------
-* Git Clone 
 
     git clone https://github.com/ojoven/woobenders.git
+
 
 * Create the bot account on Twitter
 
