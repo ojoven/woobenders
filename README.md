@@ -14,5 +14,9 @@ https://twitter.com/signup
 
 https://apps.twitter.com/app/new
 
+(Remember to give it write permissions)
+
 Configure
 ------------------
+    (app/settings.php)
+    // update here DB credentials and Twitter keys and tokens

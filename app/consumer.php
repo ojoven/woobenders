@@ -25,7 +25,7 @@ class Consumer extends OauthPhirehose {
 	public function checkFilterPredicates() {
 		$track = array();
 
-		array_push($track, "@donpepitobot");
+		array_push($track, "@" . BOT_SCREEN_NAME);
 		$this->setTrack($track);
 	}
 

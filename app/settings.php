@@ -10,3 +10,6 @@ define('TWITTER_CONSUMER_KEY','xxxx');
 define('TWITTER_CONSUMER_SECRET','xxxx');
 define('OAUTH_TOKEN','xxxx');
 define('OAUTH_SECRET','xxxx');
+
+/** Define what's the screen name of your bot / no @ here **/
+define('BOT_SCREEN_NAME','xxxx');
