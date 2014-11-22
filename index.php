@@ -16,16 +16,12 @@ class App {
 		// Establish a MySQL database connection
 		$consumer->db_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE_NAME);
 
-		// Init Models
-		$consumer->init_models();
-
 		// Start collecting tweets
 		// Automatically calls enqueueStatus($status) with each tweet's JSON data
 		$consumer->consume();
-
 	}
 
 }
 
 $app = new App();
-$index->execute;
+$app->execute();
