@@ -88,7 +88,7 @@ class Consumer extends OauthPhirehose {
 
 		$replies[0] = "hola don José";
 		$replies[1] = "por su casa yo pasé";
-		$replies[2] = "a su abuela yo le vi";
+		$replies[2] = "a su abuela yo la vi";
 		$replies[3] = "adios don José";
 
 		// Let's check if the tweet matches any of the messages

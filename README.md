@@ -1,5 +1,6 @@
 WooBenders
 ==============
+![WooBendersLogo](http://ojoven.es/wp-content/uploads/2014/11/woobenders1.png "WooBenders Logo")
 
 A mention / response Twitter bot framework.
 
