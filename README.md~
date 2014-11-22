@@ -1,3 +1,6 @@
+WooBenders
+==============
+
 A mention / response Twitter bot framework.
 
 Installation
@@ -19,13 +22,13 @@ https://apps.twitter.com/app/new
 Configure
 ------------------
     *app/settings.php*
-    // update here DB credentials, the Twitter keys and tokens and the your @bot's screen name
+    // update here DB credentials, the Twitter keys and tokens and your bot's @screenname
 
 
 Enjoy
 ------------------
     *app/consumer.php*
-    // Just customize the _doMagic() function here to reply to the mentions to your @bot as you wish
+    // Just customize the _doMagic() function here to reply to the mentions
 
 Credits
 ------------------

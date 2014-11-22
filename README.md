@@ -22,13 +22,13 @@ https://apps.twitter.com/app/new
 Configure
 ------------------
     *app/settings.php*
-    // update here DB credentials, the Twitter keys and tokens and the your @bot's screen name
+    // update here DB credentials, the Twitter keys and tokens and your bot's @screenname
 
 
 Enjoy
 ------------------
     *app/consumer.php*
-    // Just customize the _doMagic() function here to reply to the mentions to your @bot as you wish
+    // Just customize the _doMagic() function here to reply to the mentions
 
 Credits
 ------------------
@@ -40,7 +40,7 @@ We're using the following libraries:
 * [PhireHose](https://github.com/fennb/phirehose)
 * [tmhOAuth](https://github.com/themattharris/tmhOAuth)
 
-This framework has been done by [@ojoven](http://twitter.com/ojoven) and you can find me, too, at http://ojoven.es
+This framework has been done by [@ojoven](http://twitter.com/ojoven). You can find me, too, at http://ojoven.es
 
 Example
 ----------------
