@@ -31,6 +31,11 @@ Enjoy
     *app/consumer.php*
     // Just customize the _doMagic() function here to reply to the mentions
 
+Run
+------------------
+To run, just execute ./run (with nohup)
+    nohup ./run > nohup.out 2>&1 &
+
 Credits
 ------------------
 
@@ -45,6 +50,6 @@ This framework has been done by [@ojoven](http://twitter.com/ojoven). You can fi
 
 Example
 ----------------
-Along with this framework, it comes an example of use. Just say hi! (in spanish), to @donpepito:
+Along with this framework, it comes an example of use. Just say hi! (in spanish), to [@donpepitobot](http://twitter.com/donpepitobot):
 
 [Hola, @donpepitobot](https://twitter.com/intent/tweet?text=Hola,+@donpepitobot)

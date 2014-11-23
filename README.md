@@ -31,6 +31,12 @@ Enjoy
     *app/consumer.php*
     // Just customize the _doMagic() function here to reply to the mentions
 
+Run
+------------------
+To run, just execute ./run (with nohup if you want it to have it running after closing bash)
+
+    nohup ./run > nohup.out 2>&1 &
+
 Credits
 ------------------
 
