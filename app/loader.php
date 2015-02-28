@@ -7,7 +7,8 @@ function classAutoLoader($class) {
         ROOT_PATH. 'lib/',
         ROOT_PATH. 'lib/MysqliDb/',
         ROOT_PATH. 'app/behaviours/',
-        ROOT_PATH. 'app/bots/'
+        ROOT_PATH. 'app/bots/',
+        ROOT_PATH. 'app/bots/settings/'
     );
     set_include_path(implode(':',$includePaths));
     require $class . ".php";

@@ -4,6 +4,65 @@
 
 trait ResponseFunctions {
 
+    // Settings
+    public function initSettings() {
+        require_once "Settings" . get_class() . ".php";
+    }
+
+    // Oauth
+    public function getTokens() {
+
+        session_start();
+
+        Codebird::setConsumerKey(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET);
+        $cb = Codebird::getInstance();
+
+        if (! isset($_SESSION['oauth_token']) || isset($_GET['clear'])) {
+            // get the request token
+            $reply = $cb->oauth_requestToken(array(
+                'oauth_callback' => BASE_URL . 'oauth.php'
+            ));
+
+            print_r($reply);
+
+            // store the token
+            $cb->setToken($reply->oauth_token, $reply->oauth_token_secret);
+            $_SESSION['oauth_token'] = $reply->oauth_token;
+            $_SESSION['oauth_token_secret'] = $reply->oauth_token_secret;
+            $_SESSION['oauth_verify'] = true;
+
+            // redirect to auth website
+            $auth_url = $cb->oauth_authorize();
+            header('Location: ' . $auth_url);
+            die();
+
+        } elseif (isset($_GET['oauth_verifier']) && isset($_SESSION['oauth_verify'])) {
+            // verify the token
+            $cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
+            unset($_SESSION['oauth_verify']);
+
+            // get the access token
+            $reply = $cb->oauth_accessToken(array(
+                'oauth_verifier' => $_GET['oauth_verifier']
+            ));
+
+            // store the token (which is different from the request token!)
+            $_SESSION['oauth_token'] = $reply->oauth_token;
+            $_SESSION['oauth_token_secret'] = $reply->oauth_token_secret;
+
+            // send to same URL, without oauth GET parameters
+            header('Location: ' . BASE_URL . 'oauth.php');
+            die();
+        }
+
+        if (isset($_SESSION['oauth_token'])) {
+            echo "OAUTH_TOKEN: " . $_SESSION['oauth_token'] . "<br>";
+            echo "OAUTH_TOKEN_SECRET: " . $_SESSION['oauth_token_secret'] . "<br>";
+        } else {
+            echo "Connecting...";
+        }
+    }
+
     // Save on DB
     public function saveTweetDb($tweet) {
 
@@ -44,6 +103,8 @@ trait ResponseFunctions {
 
     public function parseTweet($status) {
 
+        $status = json_decode(json_encode($status),true);
+
         $tweet['id'] = $status['id'];
         $tweet['text'] = Functions::cleanUrls($status['text']);
         $tweet['user_id'] = $status['user']['id'];
@@ -51,15 +112,13 @@ trait ResponseFunctions {
         $tweet['created'] = strtotime($status['created_at']);
 
         $tweet['retweets'] = $status['retweet_count'];
-        $tweet['favs'] = $status['fav_count'];
-
-        $tweet['media_url'] = (isset($status['entities']['media'])) ? $status['entities']['media_url'] : false;
+        $tweet['favs'] = $status['favorite_count'];
 
         return $tweet;
     }
 
     public function searchTweets($text) {
-        $params = array('q'=>$text . "-filter:retweets");
+        $params = array('q'=>$text . "-filter:retweets", 'count' => 100);
         $response = (array) $this->cb->search_tweets($params);
 
         $parsedTweets = array();

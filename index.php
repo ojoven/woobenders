@@ -6,9 +6,6 @@ define('ROOT_PATH', __DIR__ . "/");
 // Require App Models
 require_once 'app/loader.php';
 
-// Require App Settings
-require_once 'app/settings.php';
-
 class App {
 
 	public function execute() {

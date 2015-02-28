@@ -16,6 +16,9 @@ class PlagiasTwits implements ResponseBehaviour {
     /** Initialize bot: DB, codebird... **/
     public function initialize() {
 
+        // First, let's initialize the settings
+        $this->initSettings();
+
         // Keywords track or user follow streaming
         $this->type_streaming = Consumer::TYPE_STREAMING_FOLLOW;
 
@@ -96,7 +99,7 @@ class PlagiasTwits implements ResponseBehaviour {
 
             // Instead of comparing dates, etc. we'll just retrieve the last tweet from this search
             $originalTweet = end($possibleOriginalTweets);
-            if ($originalTweet['favs']>self::MIN_FAVS_ORIGINAL) { // To be sure that is a plagiarism of a popular tweet
+            if ($originalTweet['user_id']!="1495782590" && $originalTweet['favs']>self::MIN_FAVS_ORIGINAL) { // To be sure that is a plagiarism of a popular tweet
                 return $originalTweet;
             }
 
@@ -111,11 +114,16 @@ class PlagiasTwits implements ResponseBehaviour {
 
         // Not to repeat always the same message
         $templates = array(
-            "¡PLAGIO! [plagier_screen_name] ha copiado este tuit de [original_screen_name] -> [original_tweet_url]",
+            "¡PLAGIO! [plagier_screen_name] te has copiado este tuit de [original_screen_name] ☞ [original_tweet_url]",
             "¡Vaya copiada [plagier_screen_name]! Gente, el tuit original es de [original_screen_name] y lo tenéis aquí: [original_tweet_url]",
+            "¡Eres un plagier [plagier_screen_name]! El tuit original de esta copiada es de [original_screen_name], miradlo: [original_tweet_url]",
+            "¿Otro plagio, [plagier_screen_name]? No paras, ¿eh? El tuit güeno es este de [original_screen_name] ☞ [original_tweet_url]",
+            "¡Venga esas copiadas! El tuit original de este plagio lo tenéis aquí ☞ [original_tweet_url] y es de [original_screen_name]. ¡Seguidle! ✋",
+            "✋ ¡STOP PLAGIOS! Tuit original de [original_screen_name] ¡más faveable y retuiteable! [original_tweet_url]. ¡Seguidle!",
+            "Jo, [plagier_screen_name] tío, me pones triste, otra copiada descarada ☹ Tuit original de [original_screen_name] aquí: [original_tweet_url]"
         );
 
-        $message = array_rand($templates);
+        $message = $templates[array_rand($templates)];
         $parsedMessage = $this->parseVariablesTweet($message,$plagiarizedTweet,$originalTweet);
         echo $parsedMessage . PHP_EOL;
 
@@ -126,7 +134,7 @@ class PlagiasTwits implements ResponseBehaviour {
     private function parseVariablesTweet($message,$plagiarizedTweet,$originalTweet) {
 
         $message = str_replace("[plagier_screen_name]", "@" . $plagiarizedTweet['user_screen_name'], $message);
-        $message = str_replace("[original_screen_name]", "XX-" . $originalTweet['user_screen_name'], $message);
+        $message = str_replace("[original_screen_name]", "@" . $originalTweet['user_screen_name'], $message);
         $originalTweetUrl = "https://twitter.com/" . $originalTweet['user_screen_name'] . "/status/" . $originalTweet['id'];
         $message = str_replace("[original_tweet_url]", $originalTweetUrl, $message);
 
