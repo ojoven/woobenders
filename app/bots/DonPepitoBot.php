@@ -14,6 +14,9 @@ class DonPepitoBot implements ResponseBehaviour {
     /** Initialize bot: DB, codebird... **/
     public function initialize() {
 
+        // First, let's initialize the settings
+        $this->initSettings();
+
         // Keywords track or user follow streaming
         $this->type_streaming = Consumer::TYPE_STREAMING_TRACK;
 

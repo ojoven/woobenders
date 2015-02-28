@@ -538,10 +538,11 @@ abstract class Phirehose
    */
   protected function statusUpdate()
   {
-      $this->log('Consume rate: ' . $this->statusRate . ' status/sec (' . $this->statusCount . ' total), avg ' . 
+    /**
+      $this->log('Consume rate: ' . $this->statusRate . ' status/sec (' . $this->statusCount . ' total), avg ' .
         'enqueueStatus(): ' . $this->enqueueTimeMS . 'ms, avg checkFilterPredicates(): ' . $this->filterCheckTimeMS . 'ms (' . 
         $this->filterCheckCount . ' total) over ' . $this->avgElapsed . ' seconds, max stream idle period: ' . 
-          $this->maxIdlePeriod . ' seconds.');
+          $this->maxIdlePeriod . ' seconds.');**/
       // Reset
         $this->statusCount = $this->filterCheckCount = $this->enqueueSpent = 0;
         $this->filterCheckSpent = $this->idlePeriod = $this->maxIdlePeriod = 0;
