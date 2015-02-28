@@ -47,9 +47,9 @@ token credentials on your Settings file.
 
 Run
 ------------------
-To run, just execute ./run [YourBotsName] (with nohup if you want it to have it running after closing bash)
+To run, just execute ./run_bot [YourBotsName] (with nohup if you want it to have it running after closing bash)
 
-    nohup ./run [YourBotsName] > nohup.out 2>&1 &
+    nohup ./run_bot [YourBotsName] > nohup.out 2>&1 &
 
 Credits
 ------------------
