@@ -81,6 +81,8 @@ class PlagiasTwits implements ResponseBehaviour {
         // First, we parse the tweet to retrieve just the important information
         $plagiarizedTweet = $this->parseTweet($plagiarizedTweet);
 
+        if ($plagiarizedTweet['is_retweet']) return; // If is a retweet, do nothing
+
         // Let's search for the original tweet
         $originalTweet = $this->findOriginalTweet($plagiarizedTweet);
 

@@ -111,6 +111,7 @@ trait ResponseFunctions {
         $tweet['user_screen_name'] = $status['user']['screen_name'];
         $tweet['created'] = strtotime($status['created_at']);
 
+        $tweet['is_retweet'] = (isset($status['retweeted_status'])) ? true : false;
         $tweet['retweets'] = $status['retweet_count'];
         $tweet['favs'] = $status['favorite_count'];
 
