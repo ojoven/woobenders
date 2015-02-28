@@ -4,7 +4,7 @@ class BotFactory {
 
     public static function getBot() {
 
-        $bot = new DonPepito();
+        $bot = new PlagiasTwits();
         return $bot;
 
     }

@@ -2,6 +2,9 @@
 
 class Consumer extends OauthPhirehose {
 
+	const TYPE_STREAMING_TRACK = "track";
+	const TYPE_STREAMING_FOLLOW = "follow";
+
 	protected $bot;
 
 	public function __construct($bot) {
@@ -18,7 +21,14 @@ class Consumer extends OauthPhirehose {
 	public function checkFilterPredicates() {
 
 		$keywords = $this->bot->getKeywords();
-		$this->setTrack($keywords);
+
+		if ($this->bot->getTypeStreaming()==self::TYPE_STREAMING_TRACK) {
+			// Keywords
+			$this->setTrack($keywords);
+		} else {
+			// User follow stream
+			$this->setFollow($keywords);
+		}
 	}
 
 	/** Treat Streamed Tweet **/

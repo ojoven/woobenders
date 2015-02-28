@@ -5,6 +5,8 @@
 
 interface ResponseBehaviour {
 
+    public function initialize();
+    public function getTypeStreaming();
     public function getKeywords();
     public function processTweet($status);
 

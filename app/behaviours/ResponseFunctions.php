@@ -42,6 +42,40 @@ trait ResponseFunctions {
 
     }
 
+    public function parseTweet($status) {
+
+        $tweet['id'] = $status['id'];
+        $tweet['text'] = Functions::cleanUrls($status['text']);
+        $tweet['user_id'] = $status['user']['id'];
+        $tweet['user_screen_name'] = $status['user']['screen_name'];
+        $tweet['created'] = strtotime($status['created_at']);
+
+        $tweet['retweets'] = $status['retweet_count'];
+        $tweet['favs'] = $status['fav_count'];
+
+        $tweet['media_url'] = (isset($status['entities']['media'])) ? $status['entities']['media_url'] : false;
+
+        return $tweet;
+    }
+
+    public function searchTweets($text) {
+        $params = array('q'=>$text . "-filter:retweets");
+        $response = (array) $this->cb->search_tweets($params);
+
+        $parsedTweets = array();
+
+        if ($response['httpstatus']=="200") {
+            $data = $response['statuses'];
+
+            foreach ($data as $tweet) {
+                $parsedTweet = $this->parseTweet($tweet);
+                array_push($parsedTweets,$parsedTweet);
+            }
+        }
+
+        return $parsedTweets;
+    }
+
     public function sendResponseTweet($message,$replyToTweetId) {
 
         $params = array(

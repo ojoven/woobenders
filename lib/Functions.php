@@ -2,6 +2,11 @@
 
 class Functions {
 
+	// Remove URLs from test
+	public static function cleanUrls($string) {
+		return preg_replace('/\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|$!:,.;]*[A-Z0-9+&@#\/%=~_|$]/i', '', $string);
+	}
+
 	// Remove accents and make it lowercase
 	public static function parseString($string) {
 

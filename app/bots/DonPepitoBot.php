@@ -1,17 +1,21 @@
 <?php
 
-class DonPepito implements ResponseBehaviour {
+class DonPepitoBot implements ResponseBehaviour {
 
     // Auxiliar Functions for Response Behaviour
     use ResponseFunctions;
 
     protected $db; // database connection
     protected $cb; // codebird (auxiliar wrapper to post tweets)
+    protected $type_streaming; // stream keywords or user
 
     const BOT_SCREEN_NAME = "@donpepitobot";
 
     /** Initialize bot: DB, codebird... **/
     public function initialize() {
+
+        // Keywords track or user follow streaming
+        $this->type_streaming = Consumer::TYPE_STREAMING_TRACK;
 
         // Database
         if (USE_DB) {
@@ -23,6 +27,11 @@ class DonPepito implements ResponseBehaviour {
         $this->cb = Codebird::getInstance();
         $this->cb->setToken(OAUTH_TOKEN, OAUTH_SECRET);
 
+    }
+
+    /** Return type of streaming **/
+    public function getTypeStreaming() {
+        return $this->type_streaming;
     }
 
     /** Returns the keywords the bot will stream for **/
