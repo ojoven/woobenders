@@ -20,7 +20,7 @@ trait ResponseFunctions {
         if (! isset($_SESSION['oauth_token']) || isset($_GET['clear'])) {
             // get the request token
             $reply = $cb->oauth_requestToken(array(
-                'oauth_callback' => BASE_URL . 'oauth.php'
+                'oauth_callback' => BASE_URL . 'oauth.php?bot=' . get_class()
             ));
 
             print_r($reply);
@@ -51,7 +51,7 @@ trait ResponseFunctions {
             $_SESSION['oauth_token_secret'] = $reply->oauth_token_secret;
 
             // send to same URL, without oauth GET parameters
-            header('Location: ' . BASE_URL . 'oauth.php');
+            header('Location: ' . BASE_URL . 'oauth.php?bot=' . get_class());
             die();
         }
 
@@ -61,6 +61,10 @@ trait ResponseFunctions {
         } else {
             echo "Connecting...";
         }
+
+        // Don't save them in session
+        unset($_SESSION['oauth_token']);
+        unset($_SESSION['oauth_token_secret']);
     }
 
     // Save on DB

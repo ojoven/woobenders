@@ -2,7 +2,7 @@
 
 while [ 1 = 1 ]
 do
-php index.php
+php index.php $1
 echo [sleeping]
 sleep 10
 done

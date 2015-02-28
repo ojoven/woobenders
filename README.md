@@ -39,14 +39,17 @@ Oauth
 ------------------
 If the bot's Twitter profile is the one from which you create the Twitter app on https://apps.twitter.com/app/new
 you can get the OAuth Tokens directly in the App's settings page. If not, you'll need to call
-http://[pathToYourApp]/oauth.php to give access to the profile that will be the bot, and copy paste the
+
+    http://[pathToYourApp]/oauth.php
+
+to give access to the profile that will be the bot, and copy paste the
 token credentials on your Settings file.
 
 Run
 ------------------
-To run, just execute ./run (with nohup if you want it to have it running after closing bash)
+To run, just execute ./run [YourBotsName] (with nohup if you want it to have it running after closing bash)
 
-    nohup ./run > nohup.out 2>&1 &
+    nohup ./run [YourBotsName] > nohup.out 2>&1 &
 
 Credits
 ------------------

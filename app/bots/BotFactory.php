@@ -2,9 +2,9 @@
 
 class BotFactory {
 
-    public static function getBot() {
+    public static function getBot($botName) {
 
-        $bot = new PlagiasTwits();
+        $bot = new $botName();
         return $bot;
 
     }
