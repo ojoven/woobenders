@@ -14,7 +14,7 @@ class App {
 	public function execute() {
 
 		// Get Behaviour
-		$behaviour = BehaviourFactory::getBehaviour();
+		$behaviour = BotFactory::getBot();
 
 		// Create new Consumer object
 		$consumer = new Consumer($behaviour);

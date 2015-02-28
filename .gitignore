@@ -1,5 +1,2 @@
 .idea
-.settings
-.buildpath
-.project
-README.md~
+app/settings.php
