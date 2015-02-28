@@ -71,4 +71,8 @@ Along with this framework, it comes a working example of use. Just say hi! (in s
 
 Disclaimer
 ----------------
-This is not intended to be an exceptional framework, but its intent is to ease the
+This is not intended to be an standard framework for creating Twitter bots, but its intent is just to ease their creation.
+
+Please use at your own risk and feel free to customize it to your specific needs.
+
+Cheers!
