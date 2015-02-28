@@ -19,7 +19,7 @@ class DonPepitoBot implements ResponseBehaviour {
 
         // Database
         if (USE_DB) {
-            $this->db = new MysqliDb(DB_HOST,DB_USERNAME,DB_PASSWORD,DB_DATABASE_NAME);
+            $this->db = new MysqliDb(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE_NAME);
         }
 
         // Codebird
@@ -99,10 +99,10 @@ class DonPepitoBot implements ResponseBehaviour {
         // Ok, having these messages, we'll check for keywords that should be present in each of them
         // We'll use the | as an OR, so each of the options can match, we could've used arrays, too; anyway.
         // We've made this case insensitive, too, and accent insensitive, too, so we don't have to worry about this
-        $messages[0] = array('hola','don','pepito');
-        $messages[1] = array('paso','ud|usted','casa');
-        $messages[2] = array('vio','ud|usted','abuela');
-        $messages[3] = array('adios','don','pepito');
+        $messages[0] = array('hola', 'don','pepito');
+        $messages[1] = array('paso', 'ud|usted','casa');
+        $messages[2] = array('vio', 'ud|usted','abuela');
+        $messages[3] = array('adios', 'don','pepito');
 
         $replies[0] = "hola don José";
         $replies[1] = "por su casa yo pasé";
@@ -115,7 +115,7 @@ class DonPepitoBot implements ResponseBehaviour {
             $matchesAllKeywords = true;
             // Let's check every keyword
             foreach ($message as $keyword) {
-                if (!Functions::isKeywordInText($keyword,$text,'|')) {
+                if (!Functions::isKeywordInText($keyword, $text, '|')) {
                     $matchesAllKeywords = false;
                 }
             }

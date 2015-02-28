@@ -86,7 +86,7 @@ class PlagiasTwits implements ResponseBehaviour {
         $originalTweet = $this->findOriginalTweet($plagiarizedTweet);
 
         if ($originalTweet) {
-            $message = $this->buildMessageToReplyToPlagiarism($plagiarizedTweet,$originalTweet);
+            $message = $this->buildMessageToReplyToPlagiarism($plagiarizedTweet, $originalTweet);
             $this->sendResponseTweet($message, $plagiarizedTweet['id']);
         }
 
@@ -111,7 +111,7 @@ class PlagiasTwits implements ResponseBehaviour {
     }
 
     /** Get the response message that belongs to that tweet mention **/
-    private function buildMessageToReplyToPlagiarism($plagiarizedTweet,$originalTweet) {
+    private function buildMessageToReplyToPlagiarism($plagiarizedTweet, $originalTweet) {
 
         // Not to repeat always the same message
         $templates = array(
@@ -125,14 +125,14 @@ class PlagiasTwits implements ResponseBehaviour {
         );
 
         $message = $templates[array_rand($templates)];
-        $parsedMessage = $this->parseVariablesTweet($message,$plagiarizedTweet,$originalTweet);
+        $parsedMessage = $this->parseVariablesTweet($message, $plagiarizedTweet, $originalTweet);
         echo $parsedMessage . PHP_EOL;
 
         return $parsedMessage;
 
     }
 
-    private function parseVariablesTweet($message,$plagiarizedTweet,$originalTweet) {
+    private function parseVariablesTweet($message, $plagiarizedTweet, $originalTweet) {
 
         $message = str_replace("[plagier_screen_name]", "@" . $plagiarizedTweet['user_screen_name'], $message);
         $message = str_replace("[original_screen_name]", "@" . $originalTweet['user_screen_name'], $message);
