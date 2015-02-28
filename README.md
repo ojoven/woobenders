@@ -2,7 +2,9 @@ WooBenders
 ==============
 ![WooBendersLogo](http://ojoven.es/wp-content/uploads/2014/11/woobenders1.png "WooBenders Logo")
 
-A mention / response Twitter bot framework.
+A framework to easily create Twitter bots.
+
+(CAUTION! THE DOCS ARE NOT UPDATED, PLEASE WAIT SOME TIME BEFORE CLONING THIS REPO)
 
 Installation
 ------------------

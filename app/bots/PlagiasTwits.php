@@ -9,8 +9,7 @@ class PlagiasTwits implements ResponseBehaviour {
     protected $cb; // codebird (auxiliar wrapper to post tweets)
     protected $type_streaming; // stream keywords or user
 
-    const PLAGIER_ID = "1286726142"; // @ojovenBizarro, for testing
-    // const PLAGIER_ID = "1495782590"; // ID for @escupotwits account
+    const PLAGIER_ID = "1495782590"; // ID for @escupotwits account
     const MIN_FAVS_ORIGINAL = 50;
 
     /** Initialize bot: DB, codebird... **/
@@ -81,7 +80,7 @@ class PlagiasTwits implements ResponseBehaviour {
         // First, we parse the tweet to retrieve just the important information
         $plagiarizedTweet = $this->parseTweet($plagiarizedTweet);
 
-        if ($plagiarizedTweet['is_retweet']) return; // If is a retweet, do nothing
+        if ($plagiarizedTweet['is_retweet']) return; // If it is a retweet, do nothing
 
         // Let's search for the original tweet
         $originalTweet = $this->findOriginalTweet($plagiarizedTweet);
@@ -101,7 +100,7 @@ class PlagiasTwits implements ResponseBehaviour {
 
             // Instead of comparing dates, etc. we'll just retrieve the last tweet from this search
             $originalTweet = end($possibleOriginalTweets);
-            if ($originalTweet['user_id']!="1495782590" && $originalTweet['favs']>self::MIN_FAVS_ORIGINAL) { // To be sure that is a plagiarism of a popular tweet
+            if ($originalTweet['user_id']!=self::PLAGIER_ID && $originalTweet['favs']>self::MIN_FAVS_ORIGINAL) { // To be sure that is a plagiarism of a popular tweet
                 return $originalTweet;
             }
 
