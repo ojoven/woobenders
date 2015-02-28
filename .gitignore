@@ -1,4 +1,3 @@
 .idea
-app/settings.php
 app/bots/settings/*
 !app/bots/settings/Settings.php.default
