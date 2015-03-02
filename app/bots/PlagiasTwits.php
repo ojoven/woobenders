@@ -87,6 +87,10 @@ class PlagiasTwits implements ResponseBehaviour {
 
         if ($originalTweet) {
             $message = $this->buildMessageToReplyToPlagiarism($plagiarizedTweet, $originalTweet);
+
+            // Let's add some randome sleep time to prevent Twitter to treat us as a bot and show us in the tweet replies. Will this work?
+            $timeToWait = rand(8,20);
+            sleep($timeToWait);
             $this->sendResponseTweet($message, $plagiarizedTweet['id']);
         }
 
@@ -119,8 +123,15 @@ class PlagiasTwits implements ResponseBehaviour {
             "¡Vaya copiada [plagier_screen_name]! Gente, el tuit original es de [original_screen_name] y lo tenéis aquí: [original_tweet_url]",
             "¡Eres un plagier [plagier_screen_name]! El tuit original de esta copiada es de [original_screen_name], miradlo: [original_tweet_url]",
             "¿Otro plagio, [plagier_screen_name]? No paras, ¿eh? El tuit güeno es este de [original_screen_name] ☞ [original_tweet_url]",
-            "¡Venga esas copiadas! El tuit original de este plagio lo tenéis aquí ☞ [original_tweet_url] y es de [original_screen_name]. ¡Seguidle! ✋",
-            "✋ ¡STOP PLAGIOS! Tuit original de [original_screen_name] ¡más faveable y retuiteable! [original_tweet_url]. ¡Seguidle!",
+            "¡Venga esas copiadas [plagier_screen_name]! El tuit original de este plagio lo tenéis aquí ☞ [original_tweet_url] y es de [original_screen_name]",
+            "✋ ¡STOP PLAGIOS [plagier_screen_name]! Tuit original de [original_screen_name] ¡más faveable y retuiteable! [original_tweet_url]",
+            "El original de esta pedazo de copiada es de [original_screen_name] ☞☞☞ [original_tweet_url]",
+            "OLA KE ASE [plagier_screen_name] TU COPIA O KE ASE. El original, de [original_screen_name] ☞ [original_tweet_url]",
+            "De bot a bot [plagier_screen_name], en serio, deja de copiar a [original_screen_name] tuits molones como este: [original_tweet_url]",
+            "Once again our friend [plagier_screen_name] copied an original tweet from [original_screen_name]. This one ☞ [original_tweet_url]",
+            "Hola [original_screen_name], soy un bot que te avisa de que [plagier_screen_name] te ha copiado este tuit: [original_tweet_url]",
+            "Qué hay, [original_screen_name], comentarte que [plagier_screen_name] te acaba de copiar este tuit: [original_tweet_url]",
+            "Hey, ya sabes, [original_screen_name], una nueva copiada de nuestro amigo [plagier_screen_name] a tu tuit ☞ [original_tweet_url]",
             "Jo, [plagier_screen_name] tío, me pones triste, otra copiada descarada ☹ Tuit original de [original_screen_name] aquí: [original_tweet_url]"
         );
 
