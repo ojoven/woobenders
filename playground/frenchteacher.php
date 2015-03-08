@@ -23,7 +23,7 @@ function wiktionary() {
     foreach ($html->find('h3') as $subheader) {
         $fatherTag = "";
         while ($fatherTag!="h2") {
-            $fatherTag = $subheader->
+
         }
     }
 }
