@@ -105,10 +105,9 @@ class PlagiasTwits implements ResponseBehaviour {
 
         $this->generateScreenshots($plagiarizedTweet,$originalTweet);
         $this->treatScreenshots();
-        //$mediaId = $this->uploadResults();
+        $mediaId = $this->uploadResults();
         $this->removeScreenshotTmpFiles();
 
-        return false;
         return $mediaId;
     }
 
