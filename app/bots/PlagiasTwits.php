@@ -8,6 +8,7 @@ class PlagiasTwits implements ResponseBehaviour {
     protected $db; // database connection
     protected $cb; // codebird (auxiliar wrapper to post tweets)
     protected $type_streaming; // stream keywords or user
+    protected $pathToApp;
 
     const PLAGIER_ID = "1495782590"; // ID for @escupotwits account
     const MIN_FAVS_ORIGINAL = 50;
@@ -30,6 +31,9 @@ class PlagiasTwits implements ResponseBehaviour {
         Codebird::setConsumerKey(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET);
         $this->cb = Codebird::getInstance();
         $this->cb->setToken(OAUTH_TOKEN, OAUTH_SECRET);
+
+        // Path to App
+        $this->pathToApp = ROOT_PATH . "app/bots/PlagiasTwitsApp/";
 
     }
 
@@ -87,11 +91,92 @@ class PlagiasTwits implements ResponseBehaviour {
 
         if ($originalTweet) {
             $message = $this->buildMessageToReplyToPlagiarism($plagiarizedTweet, $originalTweet);
+            $mediaId = $this->getScreenshotTweets($plagiarizedTweet,$originalTweet);
 
             // Let's add some randome sleep time to prevent Twitter to treat us as a bot and show us in the tweet replies. Will this work?
             $timeToWait = rand(8,20);
             sleep($timeToWait);
-            $this->sendResponseTweet($message, $plagiarizedTweet['id']);
+            $this->sendResponseTweet($message, $plagiarizedTweet['id'], $mediaId);
+        }
+
+    }
+
+    public function getScreenshotTweets($plagiarizedTweet,$originalTweet) {
+
+        $this->generateScreenshots($plagiarizedTweet,$originalTweet);
+        $this->treatScreenshots();
+        //$mediaId = $this->uploadResults();
+        $this->removeScreenshotTmpFiles();
+
+        return false;
+        return $mediaId;
+    }
+
+    public function uploadResults() {
+
+        $resultFile = $this->pathToApp . "tmp/result.png";
+        if (file_exists($resultFile)) {
+            $reply = $this->cb->media_upload(array('media' => $resultFile));
+            return $reply->media_id_string;
+        } else {
+            return false;
+        }
+
+    }
+
+    public function removeScreenshotTmpFiles() {
+
+        unlink($this->pathToApp . "tmp/plagiarized.png");
+        unlink($this->pathToApp . "tmp/original.png");
+        unlink($this->pathToApp . "tmp/result.png");
+
+    }
+
+    public function generateScreenshots($plagiarizedTweet,$originalTweet) {
+
+        $pathToPhantomJs = $this->pathToApp . "rendertweets.js";
+
+        // Generate screenshot plagiarized
+        $plagiarizedTweetUrl = "https://twitter.com/" . $plagiarizedTweet['user_screen_name'] . "/status/" . $plagiarizedTweet['id'];
+        exec("phantomjs --ssl-protocol=any " . $pathToPhantomJs .  " " . $plagiarizedTweetUrl . " " . $this->pathToApp . "tmp/plagiarized.png png");
+
+        // Generate screenshot original
+        $originalTweetUrl = "https://twitter.com/" . $originalTweet['user_screen_name'] . "/status/" . $originalTweet['id'];
+        exec("phantomjs --ssl-protocol=any " . $pathToPhantomJs .  " " . $originalTweetUrl . " " . $this->pathToApp . "tmp/original.png png");
+
+    }
+
+    public function treatScreenshots() {
+
+        $tmpFolder = $plagiarizedFile = $this->pathToApp . "tmp/";
+        $layersFolder = $plagiarizedFile = $this->pathToApp . "images/";
+        $plagiarizedFile = $tmpFolder . "plagiarized.png";
+        $originalFile = $tmpFolder . "original.png";
+
+        if (file_exists($plagiarizedFile) && file_exists($originalFile)) {
+
+            // Plagiarized
+            $plagiarized = ImageWorkshop::initFromPath($plagiarizedFile);
+            $plagiarized->resizeInPixel(600, null, true);
+
+            $plagiarizeLayer = ImageWorkshop::initFromPath($layersFolder . 'layer_plagiarized.png');
+            $plagiarizeLayer->resizeInPixel(500, null, true);
+            $plagiarized->addLayerOnTop($plagiarizeLayer, 0, 0, 'MM');
+
+            // Original
+            $original = ImageWorkshop::initFromPath('original.png');
+            $original->resizeInPixel(600, null, true);
+
+            $originalLayer = ImageWorkshop::initFromPath($layersFolder . 'layer_original.png');
+            $originalLayer->resizeInPixel(80, null, true);
+            $original->addLayerOnTop($originalLayer, 40, 40, 'RB');
+
+            // Mix
+            $firGroup1 = ImageWorkshop::initVirginLayer($plagiarized->getWidth(), $plagiarized->getHeight() + $original->getHeight());
+            $firGroup1->addLayerOnTop($plagiarized, 0, 0, 'LT');
+            $firGroup1->addLayerOnTop($original, 0, 0, 'LB');
+            $firGroup1->save($tmpFolder, "result.png", true, null, 100);
+
         }
 
     }
@@ -120,19 +205,20 @@ class PlagiasTwits implements ResponseBehaviour {
         // Not to repeat always the same message
         $templates = array(
             "¡PLAGIO! [plagier_screen_name] te has copiado este tuit de [original_screen_name] ☞ [original_tweet_url]",
-            "¡Vaya copiada [plagier_screen_name]! Gente, el tuit original es de [original_screen_name] y lo tenéis aquí: [original_tweet_url]",
-            "¡Eres un plagier [plagier_screen_name]! El tuit original de esta copiada es de [original_screen_name], miradlo: [original_tweet_url]",
+            "¡Vaya copiada [plagier_screen_name]! El original es de [original_screen_name] ☞ [original_tweet_url]",
+            "¡Eres un plagier [plagier_screen_name]! El original de esta copiada es de [original_screen_name]: [original_tweet_url]",
             "¿Otro plagio, [plagier_screen_name]? No paras, ¿eh? El tuit güeno es este de [original_screen_name] ☞ [original_tweet_url]",
-            "¡Venga esas copiadas [plagier_screen_name]! El tuit original de este plagio lo tenéis aquí ☞ [original_tweet_url] y es de [original_screen_name]",
-            "✋ ¡STOP PLAGIOS [plagier_screen_name]! Tuit original de [original_screen_name] ¡más faveable y retuiteable! [original_tweet_url]",
+            "¡Venga esas copiadas [plagier_screen_name]! El tuit original ☞ [original_tweet_url] es de [original_screen_name]",
+            "✋ ¡STOP PLAGIOS [plagier_screen_name]! Tuit de [original_screen_name] ¡más faveable y retuiteable! [original_tweet_url]",
             "El original de esta pedazo de copiada es de [original_screen_name] ☞☞☞ [original_tweet_url]",
             "OLA KE ASE [plagier_screen_name] TU COPIA O KE ASE. El original, de [original_screen_name] ☞ [original_tweet_url]",
-            "De bot a bot [plagier_screen_name], en serio, deja de copiar a [original_screen_name] tuits molones como este: [original_tweet_url]",
-            "Once again our friend [plagier_screen_name] copied an original tweet from [original_screen_name]. This one ☞ [original_tweet_url]",
-            "Hola [original_screen_name], soy un bot que te avisa de que [plagier_screen_name] te ha copiado este tuit: [original_tweet_url]",
+            "De bot a bot [plagier_screen_name], deja de copiar a [original_screen_name] tuits molones como este: [original_tweet_url]",
+            "Once again [plagier_screen_name] copied an original tweet from [original_screen_name]  ☞ [original_tweet_url]",
+            "Hola [original_screen_name], aviso de que [plagier_screen_name] te ha copiado este tuit: [original_tweet_url]",
             "Qué hay, [original_screen_name], comentarte que [plagier_screen_name] te acaba de copiar este tuit: [original_tweet_url]",
-            "Hey, ya sabes, [original_screen_name], una nueva copiada de nuestro amigo [plagier_screen_name] a tu tuit ☞ [original_tweet_url]",
-            "Jo, [plagier_screen_name] tío, me pones triste, otra copiada descarada ☹ Tuit original de [original_screen_name] aquí: [original_tweet_url]"
+            "Hey, ya sabes, [original_screen_name], una nueva copiada de [plagier_screen_name] a tu tuit ☞ [original_tweet_url]",
+            "Jo, [plagier_screen_name] tío ☹, otra copiada descarada a [original_screen_name] ☞ [original_tweet_url]",
+            "✌✌✌ ¡Otro plagio desenmascarado a [plagier_screen_name]! Tuit de [original_screen_name] ☞ [original_tweet_url]"
         );
 
         $message = $templates[array_rand($templates)];

@@ -140,12 +140,17 @@ trait ResponseFunctions {
         return $parsedTweets;
     }
 
-    public function sendResponseTweet($message,$replyToTweetId) {
+    public function sendResponseTweet($message,$replyToTweetId, $mediaId = false) {
 
         $params = array(
             'status' => $message,
             'in_reply_to_status_id' => $replyToTweetId
         );
+
+        // Any photos to upload?
+        if ($mediaId) {
+            $params['media_ids'] = $mediaId;
+        }
 
         $reply = $this->cb->statuses_update($params);
     }

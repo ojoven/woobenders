@@ -6,6 +6,7 @@ function classAutoLoader($class) {
         ROOT_PATH. 'lib/codebird/src/',
         ROOT_PATH. 'lib/',
         ROOT_PATH. 'lib/MysqliDb/',
+        ROOT_PATH. 'lib/PHPImageWorkshop/',
         ROOT_PATH. 'app/behaviours/',
         ROOT_PATH. 'app/bots/',
         ROOT_PATH. 'app/bots/settings/'

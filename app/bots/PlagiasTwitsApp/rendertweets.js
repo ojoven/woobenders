@@ -1,16 +1,18 @@
-// Example for generating video from frames
-// avconv -r 60 -f image2 -s 1920x1080 -i frames/gzaas%03d.png -vcodec libx264 -crf 15 out.mp4
-var start = new Date().getTime();
+// Let's render an screenshot with PhantomJS
+
+// Get the url of the tweet to render via console argument
+var system = require('system');
+var url = system.args[1];
+var filePath = system.args[2];
+var extension = system.args[3];
+
 var page = require('webpage').create();
 
+// For logging errors
 page.onResourceError = function(resourceError) {
     page.reason = resourceError.errorString;
     page.reason_url = resourceError.url;
 };
-
-//page.viewportSize = { width: 600, height: 400 };
-
-var url = "http://twitter.com/escupotwits/status/574685217866170368";
 
 page.open(url, function (status) {
     if (status !== 'success') {
@@ -33,7 +35,7 @@ page.open(url, function (status) {
                 height: bb.height
             };
 
-            page.render('tweet.png', { format: "png" }); // Phantom creates the images much faster in jpg but avconv creates corrupted video if JPG inputs
+            page.render(filePath, { format: extension }); // Phantom creates the images much faster in jpg but avconv creates corrupted video if JPG inputs
             phantom.exit();
 
         }, 200);
