@@ -79,7 +79,7 @@ class PlagiasTwits implements ResponseBehaviour {
     }
 
     /** Get the message for the mention and send tweet if applies **/
-    private function plagiasTwitsMagic($plagiarizedTweet) {
+    public function plagiasTwitsMagic($plagiarizedTweet) {
 
         // First, we parse the tweet to retrieve just the important information
         $plagiarizedTweet = $this->parseTweet($plagiarizedTweet);
@@ -94,7 +94,8 @@ class PlagiasTwits implements ResponseBehaviour {
             $mediaId = $this->getScreenshotTweets($plagiarizedTweet,$originalTweet);
 
             // Let's add some randome sleep time to prevent Twitter to treat us as a bot and show us in the tweet replies. Will this work?
-            $timeToWait = rand(8,20);
+            //$timeToWait = rand(8,20);
+            $timeToWait = 1;
             sleep($timeToWait);
             $this->sendResponseTweet($message, $plagiarizedTweet['id'], $mediaId);
         }
@@ -163,7 +164,7 @@ class PlagiasTwits implements ResponseBehaviour {
             $plagiarized->addLayerOnTop($plagiarizeLayer, 0, 0, 'MM');
 
             // Original
-            $original = ImageWorkshop::initFromPath('original.png');
+            $original = ImageWorkshop::initFromPath($originalFile);
             $original->resizeInPixel(600, null, true);
 
             $originalLayer = ImageWorkshop::initFromPath($layersFolder . 'layer_original.png');

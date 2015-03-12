@@ -11,16 +11,15 @@ $cb = Codebird::getInstance();
 $cb->setToken(OAUTH_TOKEN, OAUTH_SECRET);
 
 // plagiarized
-$id = "574685217866170368";
+$id = "575784844124295169";
 $params = array('id'=>$id);
-$plagiarized = $bot->parseTweet($cb->statuses_show_ID($params));
+$plagiarized = $cb->statuses_show_ID($params);
 print_r($plagiarized);
 
+/**
 // original
 $id = "574192636992577538";
 $params = array('id'=>$id);
-$original =  $bot->parseTweet($cb->statuses_show_ID($params));
+$original =  $bot->parseTweet($cb->statuses_show_ID($params));**/
 
-$mediaId = $bot->getScreenshotTweets($plagiarized,$original);
-echo "Media: " . $mediaId . PHP_EOL;
-$bot->sendResponseTweet("Estamos haciendo unas pruebas ;)", $plagiarized['id'], $mediaId);
+$bot->plagiasTwitsMagic($plagiarized);

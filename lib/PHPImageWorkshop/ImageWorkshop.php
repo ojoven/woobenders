@@ -52,6 +52,7 @@ class ImageWorkshop
      */
     public static function initFromPath($path)
     {
+        echo "Path -> " . $path . PHP_EOL;
         if (file_exists($path) && !is_dir($path)) {
             
             if (!is_readable($path)) {
