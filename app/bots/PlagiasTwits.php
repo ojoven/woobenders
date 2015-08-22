@@ -204,24 +204,24 @@ class PlagiasTwits implements ResponseBehaviour {
 
         // Not to repeat always the same message
         $templates = array(
-            "Oye, @twitter_es, ¿hacemos algo con [plagier_screen_name] y sus plagios a [original_screen_name]? ☞ [original_tweet_url]",
-            "Mira @twitter_es, otro plagio de [plagier_screen_name] a [original_screen_name] ☞ [original_tweet_url]",
-            "¿No podéis hacer nada @twitter_es para cerrar a [plagier_screen_name]? [original_screen_name] ☞ [original_tweet_url]",
+            "Oye, @TwitterEspanol, ¿hacemos algo con [plagier_screen_name] y sus plagios a [original_screen_name]? ☞ [original_tweet_url]",
+            "Mira @TwitterSpain, otro plagio de [plagier_screen_name] a [original_screen_name] ☞ [original_tweet_url]",
+            "¿No podéis hacer nada @TwitterEspanol para cerrar a [plagier_screen_name]? [original_screen_name] ☞ [original_tweet_url]",
             "¿Y si reportamos en masa a [plagier_screen_name] por plagier? Mirad ☞ [original_tweet_url] de [original_screen_name]",
-            "¡PLAGIO! [plagier_screen_name] te has copiado este tuit de [original_screen_name] ☞ [original_tweet_url] cc/ @twitter_es",
-            "¡Vaya copiada [plagier_screen_name]! El original es de [original_screen_name] ☞ [original_tweet_url] cc/ @twitter_es",
+            "¡PLAGIO! [plagier_screen_name] te has copiado este tuit de [original_screen_name] ☞ [original_tweet_url] cc/ @TwitterSpain",
+            "¡Vaya copiada [plagier_screen_name]! El original es de [original_screen_name] ☞ [original_tweet_url] cc/ @TwitterSpain",
             "¡Eres un plagier [plagier_screen_name]! El original de esta copiada es de [original_screen_name]: [original_tweet_url]",
             "¿Otro plagio, [plagier_screen_name]? No paras, ¿eh? El tuit güeno es este de [original_screen_name] ☞ [original_tweet_url]",
             "¡Venga esas copiadas [plagier_screen_name]! El tuit original ☞ [original_tweet_url] es de [original_screen_name]",
             "✋ ¡STOP PLAGIOS [plagier_screen_name]! Tuit de [original_screen_name] ¡más faveable y retuiteable! [original_tweet_url]",
-            "El original de esta pedazo de copiada es de [original_screen_name] ☞☞☞ [original_tweet_url] cc/ @twitter_es",
+            "El original de esta pedazo de copiada es de [original_screen_name] ☞☞☞ [original_tweet_url] cc/ @TwitterEspanol",
             //"OLA KE ASE [plagier_screen_name] TU COPIA O KE ASE. El original, de [original_screen_name] ☞ [original_tweet_url]",
             "De bot a bot [plagier_screen_name], deja de copiar a [original_screen_name] tuits molones como este: [original_tweet_url]",
             //"Once again [plagier_screen_name] copied an original tweet from [original_screen_name]  ☞ [original_tweet_url]",
             //"Hola [original_screen_name], aviso de que [plagier_screen_name] te ha copiado este tuit: [original_tweet_url]",
             //"Qué hay, [original_screen_name], comentarte que [plagier_screen_name] te acaba de copiar este tuit: [original_tweet_url]",
             //"Hey, ya sabes, [original_screen_name], una nueva copiada de [plagier_screen_name] a tu tuit ☞ [original_tweet_url]",
-            "Jo, [plagier_screen_name] tío ☹, otra copiada descarada a [original_screen_name] ☞ [original_tweet_url] cc/ @twitter_es",
+            "Jo, [plagier_screen_name] tío ☹, otra copiada descarada a [original_screen_name] ☞ [original_tweet_url] cc/ @TwitterEspanol",
             "✌✌✌ ¡Otro plagio desenmascarado a [plagier_screen_name]! Tuit de [original_screen_name] ☞ [original_tweet_url]"
         );
 
