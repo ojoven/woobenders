@@ -23,19 +23,42 @@ class FilmDisaffinityCron {
         // Let's generate the screenshot
         $this->_generateScreenshot();
 
-
         // Let's tweet it
-
+        $this->_sendTweetScreenshot();
 
     }
 
     private function _generateScreenshot() {
 
         $pathToPhantomJs = $this->pathToApp . "phantomreview.js";
+        $pathToScreenshot = $this->pathToApp . "tmp/review.png";
 
         // Generate screenshot plagiarized
         $url = "http://filmaffinity.ojoven.es/randombadreview/";
-        exec("phantomjs --ssl-protocol=any " . $pathToPhantomJs .  " " . $url . " " . $this->pathToApp . "tmp/review.png png");
+        exec("phantomjs --ssl-protocol=any " . $pathToPhantomJs .  " " . $url . " " . $pathToScreenshot . " png");
+
+    }
+
+    private function _sendTweetScreenshot() {
+
+        $pathToScreenshot = $this->pathToApp . "tmp/review.png";
+        if (file_exists($pathToScreenshot)) {
+
+            $reply = $this->cb->media_upload(array('media' => $pathToScreenshot));
+
+            $params = array('status' => "");
+
+            // Any photos to upload?
+            if ($reply->media_id_string) {
+                $params['media_ids'] = $reply->media_id_string;
+            }
+
+            $reply = $this->cb->statuses_update($params);
+
+            // Remove screenshot
+            unlink($pathToScreenshot);
+
+        }
 
     }
 
