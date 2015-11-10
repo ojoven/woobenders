@@ -35,7 +35,10 @@ class FilmDisaffinityCron {
 
         // Generate screenshot plagiarized
         $url = "http://filmaffinity.ojoven.es/randombadreview/";
-        exec("phantomjs --ssl-protocol=any " . $pathToPhantomJs .  " " . $url . " " . $pathToScreenshot . " png");
+        $command = "/usr/local/bin/phantomjs " . $pathToPhantomJs .  " " . $url . " " . $pathToScreenshot . " png 2>&1";
+        $return = shell_exec($command);
+
+        echo $return . PHP_EOL . $command . PHP_EOL . date("Y-m-d H:i:s") . PHP_EOL;
 
     }
 

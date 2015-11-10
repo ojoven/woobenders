@@ -1,4 +1,5 @@
 <?php
+chdir(dirname(__FILE__));
 
 // Root Path
 define('ROOT_PATH', __DIR__ . "/");
