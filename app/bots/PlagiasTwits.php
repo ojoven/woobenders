@@ -214,7 +214,7 @@ class PlagiasTwits implements ResponseBehaviour {
             "¿Otro plagio, [plagier_screen_name]? No paras, ¿eh? El tuit güeno es este de [original_screen_name] ☞ [original_tweet_url]",
             "¡Venga esas copiadas [plagier_screen_name]! El tuit original ☞ [original_tweet_url] es de [original_screen_name]",
             "✋ ¡STOP PLAGIOS [plagier_screen_name]! Tuit de [original_screen_name] ¡más faveable y retuiteable! [original_tweet_url]",
-            "El original de esta pedazo de copiada es de [original_screen_name] ☞☞☞ [original_tweet_url] cc/ @TwitterEspanol",
+            "El original de esta copiada de [plagier_screen_name] es de [original_screen_name] ☞ [original_tweet_url] cc/ @TwitterEspanol",
             //"OLA KE ASE [plagier_screen_name] TU COPIA O KE ASE. El original, de [original_screen_name] ☞ [original_tweet_url]",
             "De bot a bot [plagier_screen_name], deja de copiar a [original_screen_name] tuits molones como este: [original_tweet_url]",
             //"Once again [plagier_screen_name] copied an original tweet from [original_screen_name]  ☞ [original_tweet_url]",
