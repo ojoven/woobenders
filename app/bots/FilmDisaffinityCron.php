@@ -5,6 +5,7 @@ class FilmDisaffinityCron {
 
     protected $cb;
     protected $pathToApp;
+    protected $review;
 
     public function initialize() {
 
@@ -33,8 +34,15 @@ class FilmDisaffinityCron {
         $pathToPhantomJs = $this->pathToApp . "phantomreview.js";
         $pathToScreenshot = $this->pathToApp . "tmp/review.png";
 
+        // We get the id of the review
+        $urlGetRandomReview = "http://filmaffinity.ojoven.es/randombadreview/";
+        $reviewJson = file_get_contents($urlGetRandomReview);
+        $review = json_decode($reviewJson, true);
+        $this->review = $review;
+        $reviewId = $review['review']['review_id'];
+
         // Generate screenshot plagiarized
-        $url = "http://filmaffinity.ojoven.es/randombadreview/";
+        $url = "http://filmaffinity.ojoven.es/r/" . $reviewId;
         $command = "/usr/local/bin/phantomjs " . $pathToPhantomJs .  " " . $url . " " . $pathToScreenshot . " png 2>&1";
         $return = shell_exec($command);
 
@@ -49,7 +57,8 @@ class FilmDisaffinityCron {
 
             $reply = $this->cb->media_upload(array('media' => $pathToScreenshot));
 
-            $params = array('status' => "");
+            $message = (isset($this->review)) ? $this->review['review']['title'] : "";
+            $params = array('status' => $message);
 
             // Any photos to upload?
             if ($reply->media_id_string) {
